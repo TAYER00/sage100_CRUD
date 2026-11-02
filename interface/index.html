@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sage Conex CRUD</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header>
+    <h1>Sage Conex CRUD , F_COMPTET = client / Fournisseur  , CT_type = 0/1</h1>
+    <p id="statut-connexion" class="statut">Vérification de la connexion à l'API...</p>
+  </header>
+
+  <main>
+
+    <!-- ===== Choix de l'entité et de l'opération ===== -->
+    <section class="carte">
+      <h2>1. Entité et opération</h2>
+      <div class="ligne-champs">
+        <label>
+          Entité
+          <select id="selecteur-entite"></select>
+        </label>
+        <label>
+          Opération
+          <select id="selecteur-operation">
+            <option value="lister">Lister</option>
+            <option value="lire">Lire</option>
+            <option value="creer">Créer</option>
+            <option value="modifier">Modifier</option>
+            <option value="supprimer">Supprimer</option>
+          </select>
+        </label>
+      </div>
+    </section>
+
+    <!-- ===== Zone de saisie, dépend de l'opération choisie ===== -->
+    <section class="carte">
+      <h2>2. Données</h2>
+
+      <div id="zone-identifiant" class="ligne-champs">
+        <label>
+          Identifiant (clé, ex. CT_Num)
+          <input type="text" id="champ-identifiant" placeholder="ex: BAGUES" />
+        </label>
+      </div>
+
+      <div id="zone-donnees">
+        <p class="aide">
+          Champs générés automatiquement pour l'entité choisie — les
+          exemples affichés en fond de champ sont des suggestions, pas
+          des valeurs obligatoires.
+        </p>
+        <div id="zone-champs-dynamiques" class="ligne-champs"></div>
+      </div>
+
+      <div id="zone-pagination" class="ligne-champs">
+        <label>
+          Page
+          <input type="number" id="champ-page" value="1" min="1" />
+        </label>
+        <label>
+          Taille de page
+          <input type="number" id="champ-taille-page" value="20" min="1" max="200" />
+        </label>
+      </div>
+
+      <div id="zone-confirmer-suppression" class="ligne-champs">
+        <label>
+          <input type="checkbox" id="champ-confirmer" />
+          Je confirme la suppression
+        </label>
+      </div>
+
+      <button id="bouton-executer">Exécuter</button>
+    </section>
+
+    <!-- ===== Résultat de l'opération ===== -->
+    <section class="carte">
+      <h2>3. Résultat</h2>
+      <div id="zone-message"></div>
+      <div id="zone-resultats"></div>
+    </section>
+
+    <!-- ===== Requêtes SQL prédéfinies (lecture seule, paramétrées) ===== -->
+    <section class="carte">
+      <h2>4. Requêtes SQL prédéfinies</h2>
+      <p class="aide">
+        Lecture seule, toujours en requêtes paramétrées (jamais de valeur
+        insérée directement dans le SQL) — voir
+        <code>connexion/requetes_sql_predefinies.py</code>.
+      </p>
+
+      <div class="ligne-champs">
+        <label>
+          Requête
+          <select id="selecteur-requete-sql"></select>
+        </label>
+      </div>
+
+      <p id="description-requete-sql" class="aide"></p>
+
+      <!-- Un champ par paramètre, généré dynamiquement par app.js -->
+      <div id="zone-parametres-sql" class="ligne-champs"></div>
+
+      <button id="bouton-executer-sql">Exécuter la requête</button>
+
+      <div id="zone-message-sql"></div>
+      <div id="zone-resultats-sql"></div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>
+      Interface web consommant l'API REST/JSON de ce projet
+      (voir <code>00_analyse/05_COUCHE_API.md</code>).
+    </p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -61,6 +61,27 @@ class ConfigurationSQLLectureSeule:
             )
 
 
+class ConfigurationAPI:
+    """
+    Parametres de la couche API HTTP (FastAPI) - hote/port d'ecoute et
+    origines CORS autorisees. Lus depuis .env pour pouvoir restreindre les
+    origines en dehors du developpement local sans toucher au code.
+    """
+
+    HOTE = os.getenv("API_HOTE", "127.0.0.1")
+    PORT = int(os.getenv("API_PORT", "8000"))
+
+    # Liste separee par des virgules dans .env (ex: "http://localhost:3000,
+    # https://mon-site.fr"). "*" (defaut) convient pour le developpement
+    # local uniquement - a restreindre avant toute mise en production.
+    _ORIGINES_BRUTES = os.getenv("API_ORIGINES_CORS", "*")
+    ORIGINES_AUTORISEES = (
+        ["*"]
+        if _ORIGINES_BRUTES.strip() == "*"
+        else [origine.strip() for origine in _ORIGINES_BRUTES.split(",") if origine.strip()]
+    )
+
+
 def mode_lecture_seule_actif() -> bool:
     """
     Indique si le mode lecture seule est actif (prompt_2.txt section 8 :

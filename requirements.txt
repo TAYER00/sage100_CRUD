@@ -1,7 +1,7 @@
-# Dépendances prévues (étape 2+) — rien n'est encore importé dans du code,
-# ce fichier liste juste ce dont l'architecture proposée aura besoin.
-
 pywin32          # Accès aux objets métiers Sage 100 (COM) - nécessite un Python 32 bits
 python-dotenv    # Lecture du fichier .env (configuration non versionnée)
 pyodbc           # Connexion SQL Server en LECTURE SEULE uniquement (cf. 00_analyse)
-pytest           # Tests (étape 7)
+pytest           # Tests
+
+fastapi          # Couche API HTTP (endpoints REST/JSON, voir api/)
+uvicorn          # Serveur ASGI pour lancer l'API (main_api.py)

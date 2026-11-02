@@ -48,7 +48,17 @@ du dépôt) : **étape par étape, avec validation avant de passer à la suite.*
         nécessite `MODE_LECTURE_SEULE=false`, à lancer explicitement).
 - [ ] Étape 4 — Articles.
 - [ ] Étape 5 — Documents commerciaux.
-- [ ] Étape 6 — Interface de test.
+- [x] **Couche API HTTP** (ajout hors plan initial, demandé en cours de
+      route) : endpoints REST/JSON (`api/`), gestion des erreurs (codes
+      HTTP dédiés), CORS, pagination, verrou COM — voir
+      [`00_analyse/05_COUCHE_API.md`](00_analyse/05_COUCHE_API.md).
+      Testée en réel contre Bijou SA (lecture, liste paginée, erreurs
+      404/400, CORS). Découverte importante : l'ActiveX Sage bloque
+      quasi indéfiniment hors du thread principal/hors asyncio — d'où un
+      verrou `asyncio.Lock()` plutôt qu'un thread dédié.
+- [ ] Interface web (consomme l'API — en cours, voir `interface/`).
+- [ ] Étape 6 — Interface de test console (prévue initialement, non
+      commencée — remplacée en pratique par l'interface web).
 - [ ] Étape 7 — Tests et documentation finale.
 
 **Aucun code métier n'a encore été écrit.** Seuls l'analyse, l'architecture et

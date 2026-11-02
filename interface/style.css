@@ -1,0 +1,188 @@
+/* Styles simples, sans dépendance externe - cohérent avec l'esprit
+   "projet pédagogique pour débutant" du reste du projet. */
+
+:root {
+  --couleur-fond: #f5f6f8;
+  --couleur-carte: #ffffff;
+  --couleur-texte: #1f2430;
+  --couleur-bordure: #dadfe6;
+  --couleur-primaire: #2d6cdf;
+  --couleur-succes: #1a7f37;
+  --couleur-succes-fond: #e9f8ee;
+  --couleur-erreur: #c62828;
+  --couleur-erreur-fond: #fdecea;
+  --couleur-validation: #b26a00;
+  --couleur-validation-fond: #fff4e0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0 16px 32px;
+  background: var(--couleur-fond);
+  color: var(--couleur-texte);
+  font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+header {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px 0 8px;
+}
+
+header h1 {
+  margin: 0 0 8px;
+  font-size: 1.6rem;
+}
+
+.statut {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  background: var(--couleur-bordure);
+}
+
+.statut.ok {
+  background: var(--couleur-succes-fond);
+  color: var(--couleur-succes);
+}
+
+.statut.erreur {
+  background: var(--couleur-erreur-fond);
+  color: var(--couleur-erreur);
+}
+
+main {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.carte {
+  background: var(--couleur-carte);
+  border: 1px solid var(--couleur-bordure);
+  border-radius: 10px;
+  padding: 16px 20px;
+}
+
+.carte h2 {
+  margin-top: 0;
+  font-size: 1.05rem;
+}
+
+.ligne-champs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.9rem;
+  flex: 1 1 200px;
+}
+
+input[type="text"],
+input[type="number"],
+select,
+textarea {
+  padding: 8px 10px;
+  border: 1px solid var(--couleur-bordure);
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-family: inherit;
+}
+
+textarea {
+  width: 100%;
+  font-family: "Consolas", "Courier New", monospace;
+}
+
+.aide {
+  font-size: 0.85rem;
+  color: #555;
+  margin: 4px 0;
+}
+
+.exemple {
+  background: #f0f2f5;
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  margin: 4px 0 10px;
+}
+
+button {
+  background: var(--couleur-primaire);
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+#zone-message .message {
+  padding: 10px 14px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  font-size: 0.9rem;
+  white-space: pre-wrap;
+}
+
+#zone-message .message.succes {
+  background: var(--couleur-succes-fond);
+  color: var(--couleur-succes);
+}
+
+#zone-message .message.erreur {
+  background: var(--couleur-erreur-fond);
+  color: var(--couleur-erreur);
+}
+
+#zone-message .message.validation {
+  background: var(--couleur-validation-fond);
+  color: var(--couleur-validation);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+th, td {
+  border: 1px solid var(--couleur-bordure);
+  padding: 6px 8px;
+  text-align: left;
+}
+
+th {
+  background: #f0f2f5;
+}
+
+.pagination-info {
+  font-size: 0.85rem;
+  color: #555;
+  margin-top: 8px;
+}
+
+footer {
+  max-width: 900px;
+  margin: 24px auto 0;
+  font-size: 0.8rem;
+  color: #777;
+}

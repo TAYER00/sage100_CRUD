@@ -17,7 +17,7 @@ import pytest
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from connexion.connexion_sage import ConnexionSage
-from crud.gestion_crud import creer, lire, lister, modifier, supprimer
+from crud.gestion_crud import creer, lire, lister, modifier
 from crud.registre_entites import REGISTRE_ENTITES
 from gestion_erreurs.exceptions import ErreurEntiteInconnue, ErreurValidation
 
