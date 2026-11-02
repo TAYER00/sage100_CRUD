@@ -1,0 +1,68 @@
+Voici la liste complète, regroupée par rôle :
+
+Connexion à la base Sage :
+
+- sage_Conex_CRUD/config/configuration.py
+  - ConfigurationSage — paramètres de connexion COM (chemins .mae/.gcm, utilisateur, mot de passe)
+  - ConfigurationSQLLectureSeule — paramètres de connexion SQL Server en lecture seule
+  - mode_lecture_seule_actif() — indique si le mode lecture seule est actif
+- sage_Conex_CRUD/connexion/connexion_sage.py
+  - ConnexionSage.ouvrir() — ouvre la base comptable via COM (CPTA.Base.18)
+  - ConnexionSage.fermer() — ferme la connexion
+  - ConnexionSage.base_comptable (propriété) — donne accès à l'objet Sage ouvert
+  - ConnexionSage.est_ouverte (propriété) — indique si la connexion est ouverte
+- sage_Conex_CRUD/connexion/connexion_sql.py
+  - ConnexionSQLLectureSeule.tester_connexion() — teste la connexion SQL Server à BIJOU
+  - ConnexionSQLLectureSeule.executer_lecture(requete, parametres) — exécute une requête SELECT
+
+Lire la base de données / chercher un tiers :
+
+- sage_Conex_CRUD/crud/gestion_crud.py
+  - lire(connexion, entite, identifiant) — lit un tiers par son code (ex. CT_Num)
+  - lister(connexion, entite) — liste tous les tiers
+- sage_Conex_CRUD/crud/registre_entites.py
+  - _lire_tiers(base, cle) — appelle base.ReadCompteTNumero(cle) pour chercher un tiers
+  - _collection_tiers(base) — accède à la collection base.CompteTs (tous les tiers)
+- sage_Conex_CRUD/connexion/connexion_sql.py
+  - executer_lecture(...) — alternative en SQL direct (lecture seule) si besoin, ex. SELECT * FROM F_COMPTET
+
+Créer un tiers :
+
+- sage_Conex_CRUD/crud/gestion_crud.py
+  - creer(connexion, entite, donnees) — crée un nouveau tiers (collection.AddNew() + affectation des champs + .Write()), avec vérification de doublon et relecture de confirmation avant d'annoncer un succès
+
+Modifier un tiers :
+
+- sage_Conex_CRUD/crud/gestion_crud.py
+  - modifier(connexion, entite, identifiant, donnees) — relit le tiers, modifie les champs demandés, .Write(), puis relit pour confirmer que les valeurs ont bien changé
+
+Supprimer un tiers :
+
+- sage_Conex_CRUD/crud/gestion_crud.py
+  - supprimer(connexion, entite, identifiant, confirmer) — relit le tiers puis .Remove() ; refuse systématiquement pour l'entité "tiers" (aucun Remove() disponible dans l'API Sage installée sur ce poste)
+
+Validations communes (appelées par toutes les fonctions CRUD) :
+
+- sage_Conex_CRUD/crud/validations.py
+  - valider_connexion_ouverte(connexion) — vérifie que la connexion Sage est ouverte
+  - valider_identifiant(identifiant, champ_cle) — vérifie que la clé primaire est renseignée
+  - valider_champs_obligatoires(donnees, champs_obligatoires) — vérifie que les champs requis sont présents (0 compte comme une valeur valide)
+  - valider_mode_ecriture_autorise() — bloque creer/modifier/supprimer si MODE_LECTURE_SEULE=true
+  - valider_suppression_confirmee(confirmer) — exige confirmer=True avant toute suppression
+
+Registre des entités (pilote le CRUD générique) :
+
+- sage_Conex_CRUD/crud/registre_entites.py
+  - metadonnees(entite) — renvoie les métadonnées d'une entité (factory, clé, champs obligatoires, champs lus, suppression supportée ou non)
+  - entite_connue(entite) — indique si l'entité existe dans le registre
+  - REGISTRE_ENTITES["tiers"] — champ clé CT_Num, champs obligatoires CT_Num/CT_Intitule/CT_Type/CG_NumPrinc
+
+Gestion des erreurs et messages :
+
+- sage_Conex_CRUD/gestion_erreurs/exceptions.py
+  - ErreurConnexion, ErreurEntiteInconnue, ErreurValidation, ErreurSDKSage — exceptions dédiées
+  - message_succes(texte) / message_erreur(texte) / message_validation(texte) — formatage [SUCCÈS]/[ERREUR]/[VALIDATION] en français
+
+Test manuel d'écriture réelle (hors suite automatique) :
+
+- sage_Conex_CRUD/tests/manuel_ecriture_reelle.py — crée/modifie un tiers de test réel (ZZTEST01) dans Bijou SA ; nécessite MODE_LECTURE_SEULE=false, à lancer explicitement, jamais via pytest tests/
