@@ -1,3 +1,6 @@
+oui comme référence d'architecture et de connexion, à faire évoluer pour couvrir les objets métier au-delà des tiers.
+
+
 RUN : 
 # 4. Lancer l'API + l'interface web (même serveur)
 python main_api.py
